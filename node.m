@@ -8,6 +8,9 @@ classdef node < handle
     Position;               % [x,y] coordinates
     Color = [0 0 0];        % [r g b]
     Visible = true;         % Logical true or false
+    FontSize = 10;          % Font size
+    LabelRotation = 0;      % Label rotation
+    LabelAlignment ='right';% Label horizontal alignment
   end
   
   properties (Access = public, Dependent = true)
@@ -60,6 +63,21 @@ classdef node < handle
       this.Label = value;
       updateTextLabel(this);
     end
+
+    function set.FontSize(this,value)
+      this.FontSize = value;
+      updateTextLabel(this);
+    end
+    
+    function set.LabelRotation(this,value)
+      this.LabelRotation = value;
+      updateTextLabel(this);
+    end
+
+    function set.LabelAlignment(this,value)
+      this.LabelAlignment = value;
+      updateTextLabel(this);
+    end
     
     function value = get.Extent(this)
       value = this.TextLabel.Extent(3);
@@ -94,13 +112,19 @@ classdef node < handle
       t = atan2(y,x);
       
       this.TextLabel = text(0,0,this.Label);
-      
+      this.TextLabel.FontSize = this.FontSize;
+      this.TextLabel.HorizontalAlignment = this.LabelAlignment;
       this.TextLabel.Position = node.labelOffsetFactor*this.Position;
       if abs(t) > pi/2
-        this.TextLabel.Rotation = 180*(t/pi + 1);
-        this.TextLabel.HorizontalAlignment = 'right';
+        this.TextLabel.Rotation = 180*(t/pi + 1) + this.LabelRotation;
       else
-        this.TextLabel.Rotation = t*180/pi;
+        if this.LabelAlignment == 'right'
+            this.TextLabel.HorizontalAlignment = 'left';
+        elseif this.LabelAlignment == 'left'
+            this.TextLabel.HorizontalAlignment = 'right';
+        end
+
+        this.TextLabel.Rotation = t*180/pi - this.LabelRotation;
       end
     end
     
