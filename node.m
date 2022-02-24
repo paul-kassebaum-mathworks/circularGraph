@@ -118,12 +118,13 @@ classdef node < handle
       if abs(t) > pi/2
         this.TextLabel.Rotation = 180*(t/pi + 1) + this.LabelRotation;
       else
-        if this.LabelAlignment == 'right'
+        if strcmp(this.LabelAlignment,'right')
             this.TextLabel.HorizontalAlignment = 'left';
-        elseif this.LabelAlignment == 'left'
+        elseif strcmp(this.LabelAlignment,'left')
             this.TextLabel.HorizontalAlignment = 'right';
         end
-
+        
+      
         this.TextLabel.Rotation = t*180/pi - this.LabelRotation;
       end
     end
