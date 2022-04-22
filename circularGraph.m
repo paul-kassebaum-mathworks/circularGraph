@@ -17,7 +17,7 @@ classdef circularGraph < handle
 % Required input arguments.
 % X : A symmetric matrix of numeric or logical values. Should be positive.
 % Diagonal values are ignored. It does not matter if upper or lower
-% triangular, but it is not verified if it is trinagular, so two
+% triangular, but it is not verified if it is triangular, so two
 % connecting lines will be drawn if you pass both upper and lower, and it
 % is not verified if i-j is the same as j-i.
 %
